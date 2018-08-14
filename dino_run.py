@@ -30,7 +30,7 @@ def run_game():
     cacti = Group()
 
     while True:
-        if random.randint(0, 30) > 21:
+        if random.randint(0, 30) > 21 and set.play is True:
             gf.make_cactus(set, screen, cacti)
 
         gf.check_events(set, play_button, diego, cacti)

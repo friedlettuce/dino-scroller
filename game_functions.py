@@ -16,7 +16,6 @@ def check_events(set, play_button, diego, cacti):
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if play_button.rect.collidepoint(mouse_x, mouse_y):
                 set.play = True
-                cacti.empty()
 
     if spritecollideany(diego, cacti):
         set.reset()
@@ -27,7 +26,7 @@ def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
     ct1.blitme()
     ct2.blitme()
     sun.blitme()
-    
+
     if set.play:
         sb.show_score()
     twr.blitme()
