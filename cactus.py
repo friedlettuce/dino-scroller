@@ -9,6 +9,7 @@ class Cactus(Sprite):
 
         self.ground = set.ground
         self.speed = set.cactus_speed
+        self.scored = False
 
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()

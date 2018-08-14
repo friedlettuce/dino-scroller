@@ -1,6 +1,6 @@
 import sys, pygame
 from pygame.sprite import spritecollideany
-from city import City
+from background import City
 from cactus import Cactus
 
 def check_events(set, play_button, diego, cacti):
@@ -19,18 +19,18 @@ def check_events(set, play_button, diego, cacti):
                 cacti.empty()
 
     if spritecollideany(diego, cacti):
-        set.play = False
-        set.cacti_survived = 0
+        set.reset()
         cacti.empty()
 
-def update_screen(set, ct1, ct2, sun, play_button, diego, cacti):
+def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
     # Draw ground and background
-    #screen.fill(set.bg_color)
-    #pygame.draw.line(screen, (0,0,0),
-            #(0, set.ground), (set.screen_width, set.ground), 2)
     ct1.blitme()
     ct2.blitme()
     sun.blitme()
+    
+    if set.play:
+        sb.show_score()
+    twr.blitme()
     # Draw character and update screen
     diego.blitme()
     if set.play:
@@ -52,5 +52,10 @@ def update_cacti(set, cacti):
 
     for cactus in cacti.copy():
         if cactus.rect.x < 0:
-            set.cacti_survived = set.cacti_survived + 1
             cacti.remove(cactus)
+
+def check_score(set, diego, cacti):
+    for cactus in cacti.copy():
+        if cactus.rect.x < diego.rect.x and not cactus.scored:
+              set.score = set.score + 1
+              cactus.scored = True

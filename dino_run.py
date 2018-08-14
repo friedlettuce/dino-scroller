@@ -5,8 +5,8 @@ from time import sleep
 
 from settings import Settings
 import game_functions as gf
-from sun import Sun
-from city import City
+
+from background import Sun, City, Tower, Scoreboard
 from button import Button
 from dino import Dino
 
@@ -21,10 +21,10 @@ def run_game():
     sun = Sun(set, screen)
     ct1 = City(set, screen, 1)
     ct2 = City(set, screen, 2)
-
-    # Creates play button
+    twr = Tower(screen)
+    # Creates play button and scoreboard
     play_button = Button(set, screen, "Play")
-
+    sb = Scoreboard(set, screen)
     # Creates game objects
     diego = Dino(set, screen)
     cacti = Group()
@@ -36,12 +36,15 @@ def run_game():
         gf.check_events(set, play_button, diego, cacti)
 
         if set.play:
-            ct1.update()
-            ct2.update()
+            ct1.update(twr)
+            ct2.update(twr)
+            sb.prep_score(set)
+
         diego.update(set)
         gf.update_cacti(set, cacti)
         sleep(set.buffer)
+        gf.check_score(set, diego, cacti)
 
-        gf.update_screen(set, ct1, ct2, sun, play_button, diego, cacti)
+        gf.update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti)
 
 run_game()
