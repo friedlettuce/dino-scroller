@@ -1,7 +1,9 @@
 import sys, pygame
+from pygame.sprite import spritecollideany
+from city import City
 from cactus import Cactus
 
-def check_events(set, diego):
+def check_events(set, play_button, diego, cacti):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -10,15 +12,33 @@ def check_events(set, diego):
             if event.key == pygame.K_SPACE:
                     diego.jump(set)
 
-def update_screen(set, screen, diego, cacti):
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if play_button.rect.collidepoint(mouse_x, mouse_y):
+                set.play = True
+                cacti.empty()
+
+    if spritecollideany(diego, cacti):
+        set.play = False
+        set.cacti_survived = 0
+        cacti.empty()
+
+def update_screen(set, ct1, ct2, sun, play_button, diego, cacti):
     # Draw ground and background
-    screen.fill(set.bg_color)
-    pygame.draw.line(screen, (0,0,0),
-            (0, set.ground), (set.screen_width, set.ground), 2)
+    #screen.fill(set.bg_color)
+    #pygame.draw.line(screen, (0,0,0),
+            #(0, set.ground), (set.screen_width, set.ground), 2)
+    ct1.blitme()
+    ct2.blitme()
+    sun.blitme()
     # Draw character and update screen
     diego.blitme()
-    for cactus in cacti.sprites():
-        cactus.draw()
+    if set.play:
+        for cactus in cacti.sprites():
+            cactus.draw()
+
+    if not set.play:
+        play_button.draw_button()
 
     pygame.display.flip()
 
@@ -32,4 +52,5 @@ def update_cacti(set, cacti):
 
     for cactus in cacti.copy():
         if cactus.rect.x < 0:
+            set.cacti_survived = set.cacti_survived + 1
             cacti.remove(cactus)

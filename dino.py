@@ -39,13 +39,11 @@ class Dino:
             self.v = self.v - 1
 
              # If ground is reached, reset variables.
-            if self.rect.bottom >= self.screen_rect.bottom:
+            if self.rect.bottom >= settings.ground:
                 self.rect.bottom = self.ground
                 self.isjump = 0
                 self.v = 8
                 settings.cactus_speed = settings.cactus_speed / 500
-
-            sleep(settings.buffer)
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
