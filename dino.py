@@ -1,5 +1,6 @@
 import pygame
 from time import sleep
+from fireball import Fireball
 
 class Dino:
     def __init__(self, settings, screen):
@@ -35,7 +36,9 @@ class Dino:
         self.isjump = 0
         self.m = 8
         self.v = 2
-        # y = (x - 4.5)**2 + 20
+        # fireball
+        self.fireball = Fireball(screen, self.rect)
+        self.frame = 5
 
     def jump(self, set):
         self.isjump = 1
@@ -60,11 +63,26 @@ class Dino:
                 self.v = 8
                 settings.cactus_speed = settings.cactus_speed / 500
 
+        if settings.fireball:
+            if self.fireball.off_screen(settings.screen_width) is False:
+
+                if self.frame is 5:
+                    self.frame = 0
+                else:
+                    self.frame = self.frame + 1
+            else:
+                settings.fireball = False
+                self.fireball.reset()
+
 
 
     def blitme(self, set):
         image = self.images[set.rotation]
         self.screen.blit(image, self.rect)
+
+        if set.fireball:
+            self.fireball.shoot(self.frame)
+
 
     def set_background(self, rotation, city_image):
         print("Setting background")

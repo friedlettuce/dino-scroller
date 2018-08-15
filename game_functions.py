@@ -9,8 +9,14 @@ def check_events(set, play_button, diego, cacti):
             sys.exit()
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                    diego.jump(set)
+            if event.key == pygame.K_q:
+                set.reset()
+                cacti.empty()
+            elif event.key == pygame.K_SPACE:
+                diego.jump(set)
+            elif event.key == pygame.K_f and set.gain_fb:
+                set.fireball = True
+                set.gain_fb = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -20,6 +26,9 @@ def check_events(set, play_button, diego, cacti):
     if spritecollideany(diego, cacti):
         set.reset()
         cacti.empty()
+
+    if set.score % 10 == 0:
+        set.gain_fb = True
 
 def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
     # Draw ground and background
@@ -55,12 +64,16 @@ def make_cactus(set, screen, cacti):
         new_cactus = Cactus(set, screen)
         cacti.add(new_cactus)
 
-def update_cacti(set, cacti):
+def update_cacti(set, cacti, fireball):
     cacti.update()
 
     for cactus in cacti.copy():
         if cactus.rect.x < 0:
             cacti.remove(cactus)
+        if fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery):
+            cacti.remove(cactus)
+            set.fireball = False
+            fireball.reset()
 
 def check_score(set, diego, cacti):
     for cactus in cacti.copy():

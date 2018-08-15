@@ -15,6 +15,9 @@ class Settings:
         self.rotation = 0
         self.switch = 0
 
+        self.fireball = False
+        self.gain_fb = False
+
     def reset(self):
         self.play = False
         self.score = 0

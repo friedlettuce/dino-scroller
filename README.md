@@ -3,9 +3,10 @@
 - Learning from Python Crash Course book
 
 #### To Do
-- Fix leg loop
-- Add fire breath and cactus interaction
+- Fix fire breath and cactus interaction
+- Add fireball explosion
 - Reorganize project
+- Fix leg loop
 
 #### Description
 ###### Objects
@@ -16,3 +17,8 @@
 -
 ###### Gameplay
 - If cactus and dino touch, back to start screen
+
+###### Credit To
+- Dino Sprites: ScissorMarks
+- Fire: Pow Studios
+- City Background: r977
