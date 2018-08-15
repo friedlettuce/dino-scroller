@@ -31,10 +31,19 @@ def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
         sb.show_score()
     twr.blitme()
     # Draw character and update screen
-    diego.blitme()
     if set.play:
         for cactus in cacti.sprites():
             cactus.draw()
+
+        set.switch = set.switch + 1
+
+        if set.switch == 3:
+            if set.rotation == 5:
+                set.rotation = 1
+            else:
+                set.rotation = set.rotation + 1
+            set.switch = 0
+    diego.blitme(set)
 
     if not set.play:
         play_button.draw_button()

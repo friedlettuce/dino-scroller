@@ -12,6 +12,11 @@ class Settings:
         self.cacti_allowed = 2
         self.score = 0
 
+        self.rotation = 0
+        self.switch = 0
+
     def reset(self):
         self.play = False
         self.score = 0
+        self.rotation = 0
+        self.switch = 0
