@@ -64,13 +64,15 @@ def make_cactus(set, screen, cacti):
         new_cactus = Cactus(set, screen)
         cacti.add(new_cactus)
 
+    print(str(len(cacti)))
+
 def update_cacti(set, cacti, fireball):
     cacti.update()
 
     for cactus in cacti.copy():
         if cactus.rect.x < 0:
             cacti.remove(cactus)
-        if fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery):
+        if fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery) and set.fireball:
             cacti.remove(cactus)
             set.fireball = False
             fireball.reset()

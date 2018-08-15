@@ -80,7 +80,7 @@ class Dino:
         image = self.images[set.rotation]
         self.screen.blit(image, self.rect)
 
-        if set.fireball:
+        if set.fireball and set.play:
             self.fireball.shoot(self.frame)
 
 

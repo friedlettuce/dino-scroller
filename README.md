@@ -3,7 +3,7 @@
 - Learning from Python Crash Course book
 
 #### To Do
-- Fix fire breath and cactus interaction
+- Fix tower movement
 - Add fireball explosion
 - Reorganize project
 - Fix leg loop

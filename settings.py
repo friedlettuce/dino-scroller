@@ -9,7 +9,7 @@ class Settings:
         self.buffer = .03
 
         self.cactus_speed = 10
-        self.cacti_allowed = 2
+        self.cacti_allowed = 1
         self.score = 0
 
         self.rotation = 0

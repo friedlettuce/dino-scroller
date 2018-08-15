@@ -37,7 +37,7 @@ class City(Sprite):
 
     def update(self, twr):
         self.rect.x = self.rect.x - self.speed
-        twr.rect.x = twr.rect.x - (self.speed / 2)
+        twr.rect.x = twr.rect.x - int(self.speed / 2)
 
         if self.rect.x <= self.boundary:
             self.reset(twr)
