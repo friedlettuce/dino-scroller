@@ -5,6 +5,7 @@
 #### To Do
 - Fix leg loop
 - Add fire breath and cactus interaction
+- Reorganize project
 
 #### Description
 ###### Objects
