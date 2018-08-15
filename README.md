@@ -7,6 +7,7 @@
 - Add fireball explosion
 - Reorganize project
 - Fix leg loop
+- Make background of objects transparent
 
 #### Description
 ###### Objects

@@ -21,7 +21,6 @@ def run_game():
     sun = Sun(set, screen)
     ct1 = City(set, screen, 1)
     ct2 = City(set, screen, 2)
-    twr = Tower(screen)
     # Creates play button and scoreboard
     play_button = Button(set, screen, "Play")
     sb = Scoreboard(set, screen)
@@ -30,21 +29,22 @@ def run_game():
     cacti = Group()
 
     while True:
-        if set.play is True:
-            gf.make_cactus(set, screen, cacti)
-
         gf.check_events(set, play_button, diego, cacti)
 
         if set.play:
-            ct1.update(twr)
-            ct2.update(twr)
+            ct1.update()
+            ct2.update()
             sb.prep_score(set)
 
-        diego.update(set)
         gf.update_cacti(set, cacti, diego.fireball)
-        sleep(set.buffer)
+        if set.play is True and random.randint(0, 20) > 13:
+            gf.make_cactus(set, screen, cacti)   
+        
+        diego.update(set)
+
+        sleep(.03)
         gf.check_score(set, diego, cacti)
 
-        gf.update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti)
+        gf.update_screen(set, ct1, ct2, sun, sb, play_button, diego, cacti)
 
 run_game()

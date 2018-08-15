@@ -5,18 +5,19 @@ class Settings:
         self.bg_color = 227, 154, 171
         self.play = False
 
-        self.ground = y = self.screen_height - 20
-        self.buffer = .03
+        self.ground = self.screen_height - 20
 
         self.cactus_speed = 10
-        self.cacti_allowed = 1
+        self.cacti_allowed = 3
         self.score = 0
 
         self.rotation = 0
         self.switch = 0
+        self.frame = 0
 
         self.fireball = False
         self.gain_fb = False
+        self.explode = False
 
     def reset(self):
         self.play = False

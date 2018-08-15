@@ -2,19 +2,19 @@ import pygame
 from pygame.sprite import Sprite
 
 class Cactus(Sprite):
+    ''' Creates cactus object '''
+
     def __init__(self, set, screen):
         super().__init__()
         self.screen = screen
         self.image = pygame.image.load('images\cactus.png').convert()
 
-        self.ground = set.ground
+        # Cactus spawns on ground at right of screen
         self.speed = set.cactus_speed
         self.scored = False
-
         self.rect = self.image.get_rect()
-        self.screen_rect = screen.get_rect()
 
-        self.rect.bottom = self.ground
+        self.rect.bottom = set.ground
         self.rect.x = set.screen_width
 
     def update(self):

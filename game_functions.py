@@ -30,7 +30,7 @@ def check_events(set, play_button, diego, cacti):
     if set.score % 10 == 0:
         set.gain_fb = True
 
-def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
+def update_screen(set, ct1, ct2, sun, sb, play_button, diego, cacti):
     # Draw ground and background
     ct1.blitme()
     ct2.blitme()
@@ -38,8 +38,10 @@ def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
 
     if set.play:
         sb.show_score()
-    twr.blitme()
-    # Draw character and update screen
+    ct1.tower.blitme()
+    ct2.tower.blitme()
+    
+    # Draw cacti and animates Diego
     if set.play:
         for cactus in cacti.sprites():
             cactus.draw()
@@ -52,30 +54,36 @@ def update_screen(set, ct1, ct2, twr, sun, sb, play_button, diego, cacti):
             else:
                 set.rotation = set.rotation + 1
             set.switch = 0
+    
+    # Draws diego with animation
     diego.blitme(set)
 
+    # Draws play button if not playing
     if not set.play:
         play_button.draw_button()
 
     pygame.display.flip()
 
 def make_cactus(set, screen, cacti):
-    if len(cacti) < set.cacti_allowed:
+    
+    # Makes new cacti when less than 3 on screen
+    limit = len(cacti)
+
+    if limit < set.cacti_allowed:
         new_cactus = Cactus(set, screen)
         cacti.add(new_cactus)
-
-    print(str(len(cacti)))
 
 def update_cacti(set, cacti, fireball):
     cacti.update()
 
-    for cactus in cacti.copy():
-        if cactus.rect.x < 0:
+    for cactus in cacti:
+        if cactus.rect.x < 0 and cactus:
             cacti.remove(cactus)
-        if fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery) and set.fireball:
+    
+        elif fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery) and set.fireball:
             cacti.remove(cactus)
+            set.explode = True
             set.fireball = False
-            fireball.reset()
 
 def check_score(set, diego, cacti):
     for cactus in cacti.copy():

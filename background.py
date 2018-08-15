@@ -3,13 +3,16 @@ from pygame.sprite import Sprite
 import pygame.font
 
 class Sun:
+    ''' Creates the constant sun object '''
+
     def __init__(self, set, screen):
         self.screen = screen
         self.image = pygame.image.load('images\\sun.jpg').convert()
 
         self.rect = self.image.get_rect()
         screen_rect = self.screen.get_rect()
-
+    
+        # Sets sun to top left corner permanently
         self.rect.x = screen_rect.left + 20
         self.rect.top = screen_rect.top + 10
 
@@ -17,6 +20,8 @@ class Sun:
         self.screen.blit(self.image, self.rect)
 
 class City(Sprite):
+    ''' Creates the city, used to loop in background '''
+
     def __init__(self, set, screen, num):
         super().__init__()
         self.screen = screen
@@ -27,31 +32,41 @@ class City(Sprite):
         self.speed = int(set.cactus_speed / 4)
         self.rect = self.image.get_rect()
 
+        # Sets one city to be on screen, other loaded end of the first
         if num is 1:
             self.rect.x = 0
         elif num is 2:
             self.rect.x = self.screen_width
 
+        # Sets the boundary to reset at
         self.boundary = self.rect.x - self.screen_width
         self.rect.bottom = set.ground
 
-    def update(self, twr):
-        self.rect.x = self.rect.x - self.speed
-        twr.rect.x = twr.rect.x - int(self.speed / 2)
+        # Gives the object a tower to go infront of sun
+        self.tower = Tower(screen)
 
+    def update(self):
+
+        # Moves left across screen
+        self.rect.x = self.rect.x - self.speed
+        self.tower.rect.x = self.tower.rect.x - self.speed
+
+        # Puts on other side of current city once off screen
         if self.rect.x <= self.boundary:
-            self.reset(twr)
+            self.reset()
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-    def reset(self, twr):
+    def reset(self):
+        ''' Used in update to respawn city '''
+
         if self.num is 1:
             self.rect.x = 0
-            twr.rect.x = 0
+            self.tower.rect.x = 0
         elif self.num is 2:
             self.rect.x = self.screen_width
-            twr.rect.x = self.screen_width
+            self.tower.rect.x = self.screen_width
 
 class Tower:
     def __init__(self, screen):
