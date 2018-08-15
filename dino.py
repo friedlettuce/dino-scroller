@@ -65,3 +65,6 @@ class Dino:
     def blitme(self, set):
         image = self.images[set.rotation]
         self.screen.blit(image, self.rect)
+
+    def set_background(self, rotation, city_image):
+        print("Setting background")
