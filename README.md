@@ -3,6 +3,8 @@
 - Learning from Python Crash Course book
 
 #### To Do
+- Finish refactoring fireball
+- Make objects self contained
 - Fix tower movement
 - Reorganize and refactor project
 - Redo leg loop
@@ -26,3 +28,4 @@
 - Dino Sprites: ScissorMarks
 - Fire: Pow Studios
 - City Background: r977
+i
