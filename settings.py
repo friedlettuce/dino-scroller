@@ -24,3 +24,4 @@ class Settings:
         self.score = 0
         self.rotation = 0
         self.switch = 0
+        self.frame = 0

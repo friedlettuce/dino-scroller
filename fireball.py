@@ -50,6 +50,7 @@ class Fireball:
         # Resets fireball when offscreen
         self.rect.right = self.dino_rect.right
         self.rect.centery = self.dino_rect.centery 
+        set.frame = 0
 
     def explode(self, frame, speed):
         if self.explosion.active:

@@ -37,7 +37,7 @@ def run_game():
             sb.prep_score(set)
 
         gf.update_cacti(set, cacti, diego.fireball)
-        if set.play is True and random.randint(0, 20) > 13:
+        if set.play is True and random.randint(0, 20) > 7:
             gf.make_cactus(set, screen, cacti)   
         
         diego.update(set)
