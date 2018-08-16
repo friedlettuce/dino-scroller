@@ -12,8 +12,11 @@ def check_events(set, play_button, diego, cacti):
             if event.key == pygame.K_q:
                 set.reset()
                 cacti.empty()
+
             elif event.key == pygame.K_SPACE:
                 diego.jump(set)
+
+            # Shoots fireball if 1 is available
             elif event.key == pygame.K_f and set.gain_fb:
                 set.fireball = True
                 set.gain_fb = False
@@ -23,14 +26,16 @@ def check_events(set, play_button, diego, cacti):
             if play_button.rect.collidepoint(mouse_x, mouse_y):
                 set.play = True
 
+    # Resets game if collide
     if spritecollideany(diego, cacti):
         set.reset()
         cacti.empty()
 
+    # Every 10 scored gives 1 fireball
     if set.score % 10 == 0:
         set.gain_fb = True
 
-def update_screen(set, ct1, ct2, sun, sb, play_button, diego, cacti):
+def draw_background(set, ct1, ct2, sun, sb):
     # Draw ground and background
     ct1.blitme()
     ct2.blitme()
@@ -38,29 +43,29 @@ def update_screen(set, ct1, ct2, sun, sb, play_button, diego, cacti):
 
     if set.play:
         sb.show_score()
-    ct1.tower.blitme()
+    ct1.tower.blitme()  
     ct2.tower.blitme()
-    
-    # Draw cacti and animates Diego
+
+
+def draw_screen(set, play_button, diego, cacti):
+    # Draw cacti and animates dino
     if set.play:
         for cactus in cacti.sprites():
             cactus.draw()
 
         set.switch = set.switch + 1
 
-        if set.switch == 3:
+        if set.switch == 5:
             if set.rotation == 5:
                 set.rotation = 1
             else:
                 set.rotation = set.rotation + 1
             set.switch = 0
-    
-    # Draws diego with animation
-    diego.blitme(set)
-
-    # Draws play button if not playing
-    if not set.play:
+    else:
         play_button.draw_button()
+
+    # Draws diego with animation, blits fireball/explosion
+    diego.blitme(set)
 
     pygame.display.flip()
 
@@ -76,16 +81,23 @@ def make_cactus(set, screen, cacti):
 def update_cacti(set, cacti, fireball):
     cacti.update()
 
+    # If offscreen or collides with fireball, removes, or turns fireball off and explodes
     for cactus in cacti:
-        if cactus.rect.x < 0 and cactus:
+        if cactus.rect.x < 0:
             cacti.remove(cactus)
     
         elif fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery) and set.fireball:
             cacti.remove(cactus)
-            set.explode = True
+            fireball.reset()
+            fireball.explosion.reset()
+            fireball.explosion.active = True
+            fireball.explosion.kill = False
+            print("Explosion on", flush=True)
             set.fireball = False
 
 def check_score(set, diego, cacti):
+
+    # Adds to score each cactus jumped
     for cactus in cacti.copy():
         if cactus.rect.x < diego.rect.x and not cactus.scored:
               set.score = set.score + 1

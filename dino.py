@@ -34,23 +34,35 @@ class Dino:
         # Sets position in screen
         self.rect.bottom = settings.ground
         self.rect.centerx = int(screen_rect.centerx / 2)
+
+        self.frame = 0
+        self.run_timer = 0
         
-        # Tracks movement of image
-        self.isjump = 0
+        # Tracks jump
+        self.isjump = False
         self.m = 8
         self.v = 2
+        self.jump_timer = 0
         
         # fireball
         self.fireball = Fireball(screen, self.rect)
 
     def jump(self, set):
         # Turns jump on, speed up cactus for jump
-        self.isjump = 1
-        set.cactus_speed = set.cactus_speed * 500
+        self.isjump = True
+        self.jump_timer = 0
 
     def update(self, settings):
-        ''' Jumps, shoot and explodes fireball '''
+        ''' Runs, jumps, shoots and explodes fireball '''
+        
+        if self.run_timer is 901:
+            self.run_timer = 0
 
+        elif self.run_timer % 150 is 0:
+            if settings.play:
+                self.frame = self.frame + 1
+
+        # Block updates jump
         if self.isjump:
 
             if self.v and self.v > 0:
@@ -59,43 +71,51 @@ class Dino:
                 F = -( 0.05 * self.m * (self.v*self.v) )
 
             # Change position/velocity
-            self.rect.y = self.rect.y - F
-            self.v = self.v - 1
+            if self.jump_timer % 60 is 0 and self.jump_timer is not 1:
+                self.rect.y = self.rect.y - F
+                self.v = self.v - 1
+                self.jump_timer = 0
+            
+            self.jump_timer = self.jump_timer + 1
 
              # If ground is reached, reset variables.
             if self.rect.bottom >= settings.ground:
                 self.rect.bottom = settings.ground
-                self.isjump = 0
+                self.isjump = False
                 self.v = 8
-                settings.cactus_speed = settings.cactus_speed / 500
 
         # Updates frames for fireball 
         if settings.fireball:
             if self.fireball.off_screen(settings.screen_width) is False:
-
-                if settings.frame is 5:
-                    settings.frame = 0
-                else:
-                    settings.frame = settings.frame + 1
+                self.fireball.update_frames()
             else:
                 settings.fireball = False
                 self.fireball.reset()
-                settings.frame = 0
         
-        elif settings.explode:
+        # Checks to stop explosion
+        elif self.fireball.explosion.active:
 
-            if settings.frame is 12:
-                self.fireball.active = False
+            if self.fireball.explosion.frame is 16:
                 self.fireball.reset()
-                settings.frame = 0
+                self.fireball.explosion.reset()
+                print("Explosion off", flush=True)
             else:
-                settings.frame = settings.frame + 1
+                self.fireball.update_explosion(settings.cactus_speed)
+                print(str(self.fireball.explosion.frame))
 
     def blitme(self, set):
-        dino_image = self.images[set.rotation]
+        # Rotates through and draws dino by frame
+        if self.frame is 6:
+            self.frame = 0
+        
+        dino_image = self.images[self.frame]
         self.screen.blit(dino_image, self.rect)
 
+        if set.play:
+            self.run_timer = self.run_timer + 1
+
         if set.fireball and set.play:
-            self.fireball.shoot(set.frame)
-        elif self.fireball.explosion.active and set.play:
-            self.fireball.explode((set.frame % 6), set.cactus_speed)
+            self.fireball.shoot()
+
+        elif self.fireball.explosion.active is True and set.play:
+            self.fireball.draw_explosion()

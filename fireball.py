@@ -29,39 +29,62 @@ class Fireball:
         self.rect.centery = dino_rect.centery - 3
         # Each fireball image has same dimensions so rect will work for all
         
+        # Times frames
+        self.timer = 0
+        self.frame = 0
+
         # Explosion for fireball
         self.explosion = Explosion()
 
-    def shoot(self, frame):
+    def shoot(self):
         # Draws current fireball (frame), moves down screen
-        self.screen.blit(self.images[frame], self.rect)
-        self.rect.centerx = self.rect.centerx + 10
+        self.screen.blit(self.images[self.frame], self.rect)
+        
+        if self.timer % 100 is 0:
+            self.rect.centerx = self.rect.centerx + 10
+        self.timer = self.timer + 1
 
+    def update_frames(self):
+        if self.timer is 251:
+            self.timer = 0
+        elif self.timer % 50 is 0:    
+            if self.frame is 5:
+                self.frame = 0
+            else:
+                self.frame = self.frame + 1
+    
     def off_screen(self, screen_width):
-
         # Returns if fireball has gone off screen
         if self.rect.x > screen_width:
             return True
         else:
             return False
-
-    def reset(self):
-        
+    
+    def reset(self):    
         # Resets fireball when offscreen
         self.rect.right = self.dino_rect.right
         self.rect.centery = self.dino_rect.centery 
-        set.frame = 0
+        self.frame = 0
+        self.timer = 0
+    
+    def update_explosion(self, speed):
+        if self.timer is 501:
+            self.reset()
+            self.explosion.reset()
+            self.explosion.kill = True
+        elif self.timer % 100 is 0:
+            self.explosion.frame = self.explosion.frame + 1
+            if self.explosion.frame is 9:
+                self.explosion.frame = 0
 
-    def explode(self, frame, speed):
-        if self.explosion.active:
-            self.screen.blit(self.explosion.images[frame], self.rect)
-        
-            if frame == 8:
-                self.reset()
-                self.explosion.reset()
-            else:
-                self.rect.centerx = int(self.rect.centerx - speed)
-        
+        elif self.timer % 100:
+            self.rect.centerx = self.rect.centerx - speed
+
+        self.timer = self.timer + 1
+    
+    def draw_explosion(self):
+        self.explosion.blitme(self.screen, self.rect)
+        self.timer = self.timer + 1
 
 class Explosion:
     def __init__(self):
@@ -91,6 +114,15 @@ class Explosion:
         # Stores all frames in array
         self.images = [exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9]
         self.active = False
+        self.kill = False
+        self.frame = 0
 
     def reset(self):
         self.active = False
+        self.frame = 0
+        print("Not active")
+
+    def blitme(self, screen, rect):
+        if not self.kill and self.active:
+            screen.blit(self.images[self.frame], rect)
+            print(str(self.active) + ' printing..', flush=True)
