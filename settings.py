@@ -7,7 +7,7 @@ class Settings:
 
         self.ground = self.screen_height - 20
 
-        self.cactus_speed = .0004
+        self.cactus_speed = 7
         self.cacti_allowed = 3
         self.score = 0
 

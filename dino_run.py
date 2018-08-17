@@ -13,7 +13,7 @@ from dino import Dino
 def run_game():
     pygame.init()
     set = Settings()
-    
+
     screen = pygame.display.set_mode((set.screen_width, set.screen_height))
     pygame.display.set_caption("Dino Run")
 
@@ -24,10 +24,14 @@ def run_game():
     sb = Scoreboard(set, screen)
         # Playbutton - to start game
     play_button = Button(set, screen, "Play")
-    
+
     # Creates game objects
     diego = Dino(set, screen)
     cacti = Group()
+
+    # Times screen updates
+    timer = 41
+    update = False
 
     while True:
         # Checks jump, fireball, dino/cacti collisions
@@ -38,16 +42,18 @@ def run_game():
             ct1.update()
             ct2.update()
             sb.prep_score(set)
-    
-        gf.update_cacti(set, cacti, diego.fireball)
-        diego.update(set)
-        
+
+        if set.play:
+            gf.update_cacti(set, cacti, diego.fireball)
+            diego.update(set)
+
         if set.play is True:
-            gf.make_cactus(set, screen, cacti)   
-        
+            gf.make_cactus(set, screen, cacti)
+
         # Updates dino/fireball/explosion
 
         gf.check_score(set, diego, cacti)
+        sleep(.03)
 
         gf.draw_background(set, ct1, ct2, sun, sb)
         gf.draw_screen(set, play_button, diego, cacti)

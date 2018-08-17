@@ -43,7 +43,7 @@ def draw_background(set, ct1, ct2, sun, sb):
 
     if set.play:
         sb.show_score()
-    ct1.tower.blitme()  
+    ct1.tower.blitme()
     ct2.tower.blitme()
 
 
@@ -67,10 +67,10 @@ def draw_screen(set, play_button, diego, cacti):
     # Draws diego with animation, blits fireball/explosion
     diego.blitme(set)
 
-    pygame.display.flip()
+    pygame.display.update()
 
 def make_cactus(set, screen, cacti):
-    
+
     # Makes new cacti when less than 3 on screen
     limit = len(cacti)
 
@@ -79,20 +79,19 @@ def make_cactus(set, screen, cacti):
         cacti.add(new_cactus)
 
 def update_cacti(set, cacti, fireball):
-    cacti.update()
+    for cactus in cacti:
+        cactus.update()
 
     # If offscreen or collides with fireball, removes, or turns fireball off and explodes
     for cactus in cacti:
         if cactus.rect.x < 0:
             cacti.remove(cactus)
-    
-        elif fireball.rect.collidepoint(cactus.rect.left, cactus.rect.centery) and set.fireball:
+
+        elif fireball.rect.collidepoint(
+                cactus.rect.left, cactus.rect.centery) and set.fireball:
             cacti.remove(cactus)
             fireball.reset()
-            fireball.explosion.reset()
             fireball.explosion.active = True
-            fireball.explosion.kill = False
-            print("Explosion on", flush=True)
             set.fireball = False
 
 def check_score(set, diego, cacti):
