@@ -25,7 +25,7 @@ def check_events(settings, play_button, diego, cacti):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if play_button.rect.collidepoint(mouse_x, mouse_y):
-                diego.frame = 1 # Makes diego not stand 
+                diego.frame = 1 # Makes diego not stand
                 settings.play = True
 
     # Resets game if collide
@@ -113,5 +113,5 @@ def reset(set, dino):
     set.switch = 0
     set.frame = 0
     # Makes dino stand
-    diego.frame = 0
-    deigo.timer = 0
+    dino.frame = 0
+    dino.timer = 0

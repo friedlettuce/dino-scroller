@@ -46,7 +46,8 @@ def run_game():
             diego.update(set)    # Updates dino, fireball, explosion
 
         if set.play is True:
-            gf.make_cactus(set, screen, cacti)
+            if random.randint(0, 100) > 90:
+                gf.make_cactus(set, screen, cacti)
 
         # Updates dino/fireball/explosion
         gf.check_score(set, diego, cacti)
