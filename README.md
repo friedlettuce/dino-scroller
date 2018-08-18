@@ -5,7 +5,6 @@
 #### To Do
 - Fix tower movement
 - Reorganize and refactor project
-- Redo leg frames
 - Make background of objects transparent
 - Manage cactus spawning
 - Cover up explosions better
