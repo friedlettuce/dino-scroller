@@ -10,7 +10,7 @@ def check_events(settings, play_button, diego, cacti):
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                settings.reset()
+                reset(settings, diego)
                 cacti.empty()
 
             elif event.key == pygame.K_SPACE:
@@ -25,11 +25,12 @@ def check_events(settings, play_button, diego, cacti):
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if play_button.rect.collidepoint(mouse_x, mouse_y):
+                diego.frame = 1 # Makes diego not stand 
                 settings.play = True
 
     # Resets game if collide
     if spritecollideany(diego, cacti):
-        settings.reset()
+        reset(settings, diego)
         cacti.empty()
 
     # Every 10 scored gives 1 fireball
@@ -99,3 +100,18 @@ def check_score(set, diego, cacti):
         if cactus.rect.x < diego.rect.x and not cactus.scored:
               set.score = set.score + 1
               cactus.scored = True
+
+def reset(set, dino):
+    # Pauses game, resets score
+    set.play = False
+    set.score = 0
+    # So fireball can't be shot when restarting
+    set.fireball = False
+    set.gain_fb = False
+    # Tracks frames for dino, can I just control inside of dino?
+    set.rotation = 0
+    set.switch = 0
+    set.frame = 0
+    # Makes dino stand
+    diego.frame = 0
+    deigo.timer = 0

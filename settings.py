@@ -19,15 +19,3 @@ class Settings:
         self.gain_fb = False
         self.explode = False
         self.fireball_speed = 10
-
-    def reset(self):
-        # Pauses game, resets score
-        self.play = False
-        self.score = 0
-        # So fireball can't be shot when restarting
-        self.fireball = False
-        self.gain_fb = False
-        # Tracks frames for dino, can I just control inside of dino?
-        self.rotation = 0
-        self.switch = 0
-        self.frame = 0

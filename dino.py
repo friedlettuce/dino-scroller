@@ -8,26 +8,27 @@ class Dino:
         self.screen = screen
 
         # Frames for dino
-        self.image_stand = pygame.image.load('images/dino_stand.png').convert()
-        self.image_l1 = pygame.image.load('images/dino_l1.png').convert()
-        self.image_l2 = pygame.image.load('images/dino_l2.png').convert()
-        self.image_ma = pygame.image.load('images/dino_midair.png').convert()
-        self.image_r1 = pygame.image.load('images/dino_r1.png').convert()
-        self.image_r2 = pygame.image.load('images/dino_r2.png').convert()
+        frame1 = pygame.image.load('images/dino/dino1.png').convert()
+        frame2 = pygame.image.load('images/dino/dino2.png').convert()
+        frame3 = pygame.image.load('images/dino/dino3.png').convert()
+        frame4 = pygame.image.load('images/dino/dino4.png').convert()
+        frame5 = pygame.image.load('images/dino/dino5.png').convert()
+        frame6 = pygame.image.load('images/dino/dino6.png').convert()
+        frame7 = pygame.image.load('images/dino/dino7.png').convert()
 
         # Scales frames to draw
-        self.image_stand = pygame.transform.scale(self.image_stand, (30, 34))
-        self.image_l1 = pygame.transform.scale(self.image_l1, (30, 34))
-        self.image_l2 = pygame.transform.scale(self.image_l2, (30, 34))
-        self.image_ma = pygame.transform.scale(self.image_ma, (30, 34))
-        self.image_r1 = pygame.transform.scale(self.image_r1, (30, 34))
-        self.image_r2 = pygame.transform.scale(self.image_r2, (30, 34))
+        frame1 = pygame.transform.scale(frame1, (30, 34))
+        frame2 = pygame.transform.scale(frame2, (30, 34))
+        frame3 = pygame.transform.scale(frame3, (30, 34))
+        frame4 = pygame.transform.scale(frame4, (30, 34))
+        frame5 = pygame.transform.scale(frame5, (30, 34))
+        frame6 = pygame.transform.scale(frame6, (30, 34))
+        frame7 = pygame.transform.scale(frame7, (30, 34))
         # Stores frames in array
-        self.images = [self.image_stand, self.image_l1, self.image_l2,
-                       self.image_ma, self.image_r1, self.image_r2]
+        self.images = [frame1, frame2, frame3, frame4, frame5, frame6, frame7]
 
         # Sets rect for image and screen
-        self.rect = self.image_stand.get_rect()
+        self.rect = frame1.get_rect()
         screen_rect = screen.get_rect()
 
         # Sets position in screen
@@ -35,6 +36,7 @@ class Dino:
         self.rect.centerx = int(screen_rect.centerx / 2)
 
         self.frame = 0
+        self.timer = 0
 
         # Tracks jump
         self.isjump = False
@@ -56,7 +58,13 @@ class Dino:
     def update(self, settings):
         ''' Runs, jumps, shoots and explodes fireball '''
         if settings.play:
-            self.frame = self.frame + 1
+            # Times the frames to draw
+            if self.timer == 21:
+                self.timer = 0
+                self.frame = self.frame + 1
+            elif self.timer % 3 == 0:
+                self.frame = self.frame + 1
+            self.timer = self.timer + 1
 
         # Block updates jump
         if self.isjump:
@@ -95,8 +103,8 @@ class Dino:
 
     def blitme(self, set):
         # Rotates through and draws dino by frame
-        if self.frame is 6:
-            self.frame = 0
+        if self.frame is 7:
+            self.frame = 1  # Restarts frame loop
 
         dino_image = self.images[self.frame]
         self.screen.blit(dino_image, self.rect)
