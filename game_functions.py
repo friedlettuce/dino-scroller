@@ -49,7 +49,7 @@ def draw_background(set, ct1, ct2, sun, sb):
     ct2.tower.blitme()
 
 
-def draw_screen(set, play_button, diego, cacti):
+def draw_screen(set, play_button, high_score, diego, cacti):
     # Draw cacti and animates dino
     if set.play:
         for cactus in cacti.sprites():
@@ -68,6 +68,9 @@ def draw_screen(set, play_button, diego, cacti):
 
     # Draws diego with animation, blits fireball
     diego.blitme(set)
+
+    if not set.play:
+        high_score.show_score()
     pygame.display.update()
 
 def make_cactus(set, screen, cacti):
@@ -104,6 +107,9 @@ def check_score(set, diego, cacti):
 def reset(set, dino):
     # Pauses game, resets score
     set.play = False
+
+    if set.score > set.high_score:
+        set.high_score = set.score
     set.score = 0
     # So fireball can't be shot when restarting
     set.fireball = False

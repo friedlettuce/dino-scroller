@@ -85,9 +85,15 @@ class Scoreboard:
         self.text_color = (30, 30, 30)
         self.font = pygame.font.SysFont(None, 48)
 
-    def prep_score(self, set):
-        score = str(set.score)
-        self.score_img = self.font.render(score, True, self.text_color,
+    def prep_score(self, set, hs=False):
+
+        if not hs:
+            score = str(set.score)
+            self.score_img = self.font.render(score, True, self.text_color,
+                    self.set.bg_color)
+        else:
+            high_score = str(set.high_score)
+            self.score_img = self.font.render(high_score, True, self.text_color,
                     self.set.bg_color)
 
         self.score_rect = self.score_img.get_rect()

@@ -22,6 +22,7 @@ def run_game():
     ct1 = City(set, screen, 1)
     ct2 = City(set, screen, 2)
     sb = Scoreboard(set, screen)
+    high_score = Scoreboard(set, screen)
         # Playbutton - to start game
     play_button = Button(set, screen, "Play")
 
@@ -45,15 +46,20 @@ def run_game():
             gf.update_cacti(set, cacti, diego.fireball)
             diego.update(set)    # Updates dino, fireball, explosion
 
-        if set.play is True:
-            if random.randint(0, 100) > 90:
+            if random.randint(0, 10) > 8:
                 gf.make_cactus(set, screen, cacti)
+        else:
+            high_score.prep_score(set, True)
 
         # Updates dino/fireball/explosion
         gf.check_score(set, diego, cacti)
 
         gf.draw_background(set, ct1, ct2, sun, sb)
-        gf.draw_screen(set, play_button, diego, cacti)
+        gf.draw_screen(set, play_button, high_score, diego, cacti)
+
+        if not set.play:
+            high_score.prep_score(set, True)
+            high_score.show_score()
         sleep(.03)  # Gets around 34 frames a second
 
 run_game()

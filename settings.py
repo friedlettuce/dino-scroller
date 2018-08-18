@@ -7,9 +7,10 @@ class Settings:
 
         self.play = False
         # Cacti
-        self.cactus_speed = 7
+        self.cactus_speed = 8
         self.cacti_allowed = 3
         self.score = 0
+        self.high_score = 0
         # Dino
         self.rotation = 0
         self.switch = 0
