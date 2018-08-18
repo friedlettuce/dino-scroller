@@ -3,14 +3,14 @@
 - Learning from Python Crash Course book
 
 #### To Do
-- Finish refactoring fireball
-- Make objects self contained
 - Fix tower movement
 - Reorganize and refactor project
-- Redo leg loop
+- Redo leg frames
 - Make background of objects transparent
 - Manage cactus spawning
-- Manage transistions in fireball/explosion
+- Cover up explosions better
+- Time objects better instead of sleep for more fps
+- Initialize jump
 
 #### Description
 ###### Objects
@@ -22,7 +22,7 @@
 
 ###### Gameplay
 - If cactus and dino touch, back to start screen
-- For every 10 points the dino gains a fireball 
+- For every 10 points the dino gains a fireball
 
 ###### Credit To
 - Dino Sprites: ScissorMarks

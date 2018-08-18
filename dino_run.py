@@ -28,10 +28,7 @@ def run_game():
     # Creates game objects
     diego = Dino(set, screen)
     cacti = Group()
-
-    # Times screen updates
-    timer = 41
-    update = False
+    diego.jump()    # Initialize jump for player
 
     while True:
         # Checks jump, fireball, dino/cacti collisions
@@ -44,18 +41,18 @@ def run_game():
             sb.prep_score(set)
 
         if set.play:
+            # Checks for fireball collision or offscreen cacti
             gf.update_cacti(set, cacti, diego.fireball)
-            diego.update(set)
+            diego.update(set)    # Updates dino, fireball, explosion
 
         if set.play is True:
             gf.make_cactus(set, screen, cacti)
 
         # Updates dino/fireball/explosion
-
         gf.check_score(set, diego, cacti)
-        sleep(.03)
 
         gf.draw_background(set, ct1, ct2, sun, sb)
         gf.draw_screen(set, play_button, diego, cacti)
+        sleep(.03)  # Gets around 34 frames a second
 
 run_game()

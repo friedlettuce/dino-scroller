@@ -11,7 +11,7 @@ class Sun:
 
         self.rect = self.image.get_rect()
         screen_rect = self.screen.get_rect()
-    
+
         # Sets sun to top left corner permanently
         self.rect.x = screen_rect.left + 20
         self.rect.top = screen_rect.top + 10
@@ -46,7 +46,6 @@ class City(Sprite):
         self.tower = Tower(screen)
 
     def update(self):
-
         # Moves left across screen
         self.rect.x = self.rect.x - self.speed
         self.tower.rect.x = self.tower.rect.x - self.speed
@@ -60,18 +59,15 @@ class City(Sprite):
 
     def reset(self):
         ''' Used in update to respawn city '''
-
         if self.num is 1:
-            self.rect.x = 0
-            self.tower.rect.x = 0
+            self.tower.rect.x = self.rect.x = 0
         elif self.num is 2:
-            self.rect.x = self.screen_width
-            self.tower.rect.x = self.screen_width
+            self.tower.rect.x = self.rect.x = self.screen_width
 
 class Tower:
     def __init__(self, screen):
         self.screen = screen
-        self.image = pygame.image.load('images\\tower.jpg')
+        self.image = pygame.image.load('images/tower.jpg').convert()
         self.rect = self.image.get_rect()
 
         self.rect.x = 715

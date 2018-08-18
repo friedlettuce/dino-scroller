@@ -1,5 +1,4 @@
 import pygame
-from time import sleep
 from fireball import Fireball
 
 class Dino:
@@ -43,11 +42,16 @@ class Dino:
         self.v = 2
 
         # fireball
-        self.fireball = Fireball(screen, self.rect)
+        self.fireball = Fireball(settings, screen, self.rect)
 
-    def jump(self, set):
+    def jump(self):
         # Turns jump on, speed up cactus for jump
         self.isjump = True
+
+    # Makes sure fireball rect is dino rect upon firing
+    def set_fireball(self):
+        self.fireball.rect.right = self.rect.right
+        self.fireball.rect.centery = self.rect.centery
 
     def update(self, settings):
         ''' Runs, jumps, shoots and explodes fireball '''
@@ -74,8 +78,9 @@ class Dino:
 
         # Updates frames for fireball
         if settings.fireball:
-            if self.fireball.off_screen(settings.screen_width) is False:
+            if not self.fireball.off_screen(settings.screen_width):
                 self.fireball.update_frames()
+                self.fireball.update()
             else:
                 settings.fireball = False
                 self.fireball.reset()
@@ -85,8 +90,8 @@ class Dino:
             self.fireball.EXPLODE(settings.cactus_speed)
 
             if not self.fireball.explosion.active:
-                self.fireball.reset()
                 self.fireball.explosion.reset()
+                self.fireball.reset()
 
     def blitme(self, set):
         # Rotates through and draws dino by frame

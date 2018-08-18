@@ -1,7 +1,8 @@
 import pygame
+from time import sleep
 
 class Fireball:
-    def __init__(self, screen, dino_rect):
+    def __init__(self, settings, screen, dino_rect):
         # Stores screen and fireball animation
         self.screen = screen
         fb1 = pygame.image.load('images/fireball/fireball_1.png').convert()
@@ -18,21 +19,19 @@ class Fireball:
         fb4 = pygame.transform.scale(fb4, (32, 32))
         fb5 = pygame.transform.scale(fb5, (32, 32))
         fb6 = pygame.transform.scale(fb6, (32, 32))
-
         # Stores in array to loop through
         self.images = [fb1, fb2, fb3, fb4, fb5, fb6]
 
         #Sets position of first fire ball
         self.dino_rect = dino_rect
         self.rect = self.images[0].get_rect()
-        self.rect.right = dino_rect.right
-        self.rect.centery = dino_rect.centery - 3
-        # Each fireball image has same dimensions so rect will work for all
-        # Times frames
-        self.frame = 0
+
+        # Sets speed of explosion
+        self.speed = settings.cactus_speed
+        self.frame = 0  # Loops through frames
 
         # Explosion for fireball
-        self.explosion = Explosion()
+        self.explosion = Explosion(settings, screen)
 
     def shoot(self):
         # Draws current fireball (frame), moves down screen
@@ -46,7 +45,7 @@ class Fireball:
                 self.frame = self.frame + 1
 
     def update(self):
-        self.rect.centerx = self.rect.centerx + 10
+        self.rect.centerx = self.rect.centerx + self.speed
 
     def off_screen(self, screen_width):
         # Returns if fireball has gone off screen
@@ -57,22 +56,20 @@ class Fireball:
 
     def reset(self):
         # Resets fireball when offscreen
-        self.rect.right = self.dino_rect.right
-        self.rect.centery = self.dino_rect.centery
         self.frame = 0
 
     def EXPLODE(self, speed):
-        self.explosion.update()
-
         if self.explosion.active:
-            self.rect.centerx = self.rect.centerx - speed
+            self.rect.centerx = self.rect.centerx - speed + 3
             self.explosion.blitme(self.screen, self.rect)
+
+            self.explosion.update()
         else:
             self.reset()
             self.explosion.reset()
 
 class Explosion:
-    def __init__(self):
+    def __init__(self, settings, screen):
 
         # Stores screen and images
         exp1 = pygame.image.load('images/fireball_hit/fb_hit_1.png').convert()
@@ -95,27 +92,34 @@ class Explosion:
         exp7 = pygame.transform.scale(exp7, (64, 64))
         exp8 = pygame.transform.scale(exp8, (64, 64))
         exp9 = pygame.transform.scale(exp9, (64, 64))
-
         # Stores all frames in array
         self.images = [exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9]
+
+        self.screen = screen
+        self.set = settings
         self.active = False
+
         self.frame = 0
         self.switch = False
+        self.flip = False
 
     def update(self):
-        if self.frame is 9 and self.switch:
-            self.frame = 0
-        elif self.frame is 9:
-            self.switch = True
-        else:
-            self.frame = self.frame + 1
+        self.frame = self.frame + 1
 
     def reset(self):
         self.active = False
         self.frame = 0
+
         self.switch = False
+        self.flip = False
+
+        # Covers up blitted explosion
+        pygame.draw.line(self.screen,((0, 0, 0)),(0, self.set.screen_height),
+        (self.set.screen_width, self.set.screen_height), 50)
 
     def blitme(self, screen, rect):
-        if self.frame >= 9:
-            print(str(self.frame), flush=True)
-        screen.blit(self.images[self.frame], rect)
+        if self.frame >= 19:
+            self.reset()
+        elif self.active:
+            # Each fireball image has same dimensions so rect will work for all
+            screen.blit(self.images[self.frame % 9], rect)

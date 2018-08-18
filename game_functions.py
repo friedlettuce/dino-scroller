@@ -3,37 +3,38 @@ from pygame.sprite import spritecollideany
 from background import City
 from cactus import Cactus
 
-def check_events(set, play_button, diego, cacti):
+def check_events(settings, play_button, diego, cacti):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                set.reset()
+                settings.reset()
                 cacti.empty()
 
             elif event.key == pygame.K_SPACE:
-                diego.jump(set)
+                diego.jump()
 
             # Shoots fireball if 1 is available
-            elif event.key == pygame.K_f and set.gain_fb:
-                set.fireball = True
-                set.gain_fb = False
+            elif event.key == pygame.K_f and settings.gain_fb:
+                diego.set_fireball()
+                settings.fireball = True
+                settings.gain_fb = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if play_button.rect.collidepoint(mouse_x, mouse_y):
-                set.play = True
+                settings.play = True
 
     # Resets game if collide
     if spritecollideany(diego, cacti):
-        set.reset()
+        settings.reset()
         cacti.empty()
 
     # Every 10 scored gives 1 fireball
-    if set.score % 10 == 0:
-        set.gain_fb = True
+    if settings.score % 10 == 0 and settings.score > 9:
+        settings.gain_fb = True
 
 def draw_background(set, ct1, ct2, sun, sb):
     # Draw ground and background
@@ -64,9 +65,8 @@ def draw_screen(set, play_button, diego, cacti):
     else:
         play_button.draw_button()
 
-    # Draws diego with animation, blits fireball/explosion
+    # Draws diego with animation, blits fireball
     diego.blitme(set)
-
     pygame.display.update()
 
 def make_cactus(set, screen, cacti):
@@ -90,12 +90,10 @@ def update_cacti(set, cacti, fireball):
         elif fireball.rect.collidepoint(
                 cactus.rect.left, cactus.rect.centery) and set.fireball:
             cacti.remove(cactus)
-            fireball.reset()
             fireball.explosion.active = True
             set.fireball = False
 
 def check_score(set, diego, cacti):
-
     # Adds to score each cactus jumped
     for cactus in cacti.copy():
         if cactus.rect.x < diego.rect.x and not cactus.scored:
