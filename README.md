@@ -3,13 +3,11 @@
 - Learning from Python Crash Course book
 
 #### To Do
-- Fix tower movement
 - Reorganize and refactor project
 - Make background of objects transparent
-- Manage cactus spawning
+- Improve cactus spawning
 - Cover up explosions better
-- Time objects better instead of sleep for more fps
-- Initialize jump
+- Time objects better for more fps
 
 #### Description
 ###### Objects
