@@ -1,4 +1,4 @@
-## Dino Scroller
+## Dino Run
 - Cool name pending
 - Learning from Python Crash Course book
 
@@ -11,7 +11,7 @@
 
 #### Description
 ###### Objects
-- A dino of 6 frames, with a fireball object
+- A dino of 7 frames, with a fireball object
 - Fireball with object explosion
 - City loops around player
 - Cactus randomly generate and move across screen in 3's
@@ -23,6 +23,5 @@
 
 ###### Credit To
 - Dino Sprites: ScissorMarks
-- Fire: Pow Studios
+- Fireball and Explosion: Pow Studios
 - City Background: r977
-i
