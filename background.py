@@ -60,9 +60,11 @@ class City(Sprite):
     def reset(self):
         ''' Used in update to respawn city '''
         if self.num is 1:
-            self.tower.rect.x = self.rect.x = 0
+            self.tower.rect.x = 0 - 5
+            self.rect.x = 0
         elif self.num is 2:
-            self.tower.rect.x = self.rect.x = self.screen_width
+            self.tower.rect.x = self.screen_width - 5
+            self.rect.x = self.screen_width
 
 class Tower:
     def __init__(self, screen):
@@ -70,6 +72,10 @@ class Tower:
         self.image = pygame.image.load('images/tower.jpg').convert()
         self.rect = self.image.get_rect()
 
+        self.rect.x = 715
+        self.rect.bottom = 65
+
+    def reset(self):
         self.rect.x = 715
         self.rect.bottom = 65
 
