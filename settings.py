@@ -16,7 +16,8 @@ class Settings:
         self.switch = 0
         self.frame = 0
         # Fireball
-        self.fireball = False
+        self.fireball = 0
+        self.fireball_count = 0
         self.gain_fb = False
         self.explode = False
         self.fireball_speed = 10

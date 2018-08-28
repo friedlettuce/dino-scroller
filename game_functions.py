@@ -20,10 +20,10 @@ def check_events(settings, play_button, diego, cacti):
                     diego.jump()
 
             # Shoots fireball if 1 is available
-            elif event.key == pygame.K_f and settings.gain_fb:
+            elif event.key == pygame.K_f and settings.fireball_count > 0:
                 diego.set_fireball()
                 settings.fireball = True
-                settings.gain_fb = False
+                settings.fireball_count = settings.fireball_count - 1
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -38,7 +38,7 @@ def check_events(settings, play_button, diego, cacti):
 
     # Every 10 scored gives 1 fireball
     if settings.score % 10 == 0 and settings.score > 9:
-        settings.gain_fb = True
+        settings.fireball_count = settings.fireball_count + 1
 
 def draw_background(set, ct1, ct2, sun, sb):
     # Draw ground and background
@@ -116,6 +116,7 @@ def reset(set, dino):
     set.score = 0
     # So fireball can't be shot when restarting
     set.fireball = False
+    set.fireball_count = 0
     set.gain_fb = False
     # Tracks frames for dino, can I just control inside of dino?
     set.rotation = 0
