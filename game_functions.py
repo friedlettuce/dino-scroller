@@ -3,37 +3,37 @@ from pygame.sprite import spritecollideany
 from background import City
 from cactus import Cactus
 
-def check_events(settings, play_button, diego, cacti):
+def check_events(settings, play_button, dino, cacti):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                reset(settings, diego)
+                reset(settings, dino)
                 cacti.empty()
 
             elif event.key == pygame.K_SPACE:
                 if not settings.play:
                     settings.play = True
                 else:
-                    diego.jump()
+                    dino.jump()
 
             # Shoots fireball if 1 is available
             elif event.key == pygame.K_f and settings.fireball_count > 0:
-                diego.set_fireball()
+                dino.set_fireball()
                 settings.fireball = True
                 settings.fireball_count = settings.fireball_count - 1
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if play_button.rect.collidepoint(mouse_x, mouse_y):
-                diego.frame = 1 # Makes diego not stand
+                dino.frame = 1 # Makes dino not stand
                 settings.play = True
 
     # Resets game if collide
-    if spritecollideany(diego, cacti):
-        reset(settings, diego)
+    if spritecollideany(dino, cacti):
+        reset(settings, dino)
         cacti.empty()
 
     # Every 10 scored gives 1 fireball
@@ -52,7 +52,7 @@ def draw_background(set, ct1, ct2, sun, sb):
     ct2.tower.blitme()
 
 
-def draw_screen(set, play_button, high_score, diego, cacti):
+def draw_screen(set, play_button, high_score, dino, cacti):
     # Draw cacti and animates dino
     if set.play:
         for cactus in cacti.sprites():
@@ -69,8 +69,8 @@ def draw_screen(set, play_button, high_score, diego, cacti):
     else:
         play_button.draw_button()
 
-    # Draws diego with animation, blits fireball
-    diego.blitme(set)
+    # Draws dino with animation, blits fireball
+    dino.blitme(set)
 
     if not set.play:
         high_score.show_score()
@@ -100,10 +100,10 @@ def update_cacti(set, cacti, fireball):
             fireball.explosion.active = True
             set.fireball = False
 
-def check_score(set, diego, cacti):
+def check_score(set, dino, cacti):
     # Adds to score each cactus jumped
     for cactus in cacti.copy():
-        if cactus.rect.x < diego.rect.x and not cactus.scored:
+        if cactus.rect.x < dino.rect.x and not cactus.scored:
               set.score = set.score + 1
               cactus.scored = True
 

@@ -26,13 +26,13 @@ def run_game():
     play_button = Button(set, screen, "Play")
 
     # Creates game objects
-    diego = Dino(set, screen)
+    dino = Dino(set, screen)
     cacti = Group()
-    diego.jump()    # Initialize jump for player
+    dino.jump()    # Initialize jump for player
 
     while True:
         # Checks jump, fireball, dino/cacti collisions
-        gf.check_events(set, play_button, diego, cacti)
+        gf.check_events(set, play_button, dino, cacti)
 
         if set.play:
             # Updates city movement
@@ -42,8 +42,8 @@ def run_game():
 
         if set.play:
             # Checks for fireball collision or offscreen cacti
-            gf.update_cacti(set, cacti, diego.fireball)
-            diego.update(set)    # Updates dino, fireball, explosion
+            gf.update_cacti(set, cacti, dino.fireball)
+            dino.update(set)    # Updates dino, fireball, explosion
 
             if random.randint(0, 10) > 8:   # Need better spawning method
                 gf.make_cactus(set, screen, cacti)
@@ -51,10 +51,10 @@ def run_game():
             high_score.prep_score(set, True)
 
         # Updates dino/fireball/explosion
-        gf.check_score(set, diego, cacti)
+        gf.check_score(set, dino, cacti)
 
         gf.draw_background(set, ct1, ct2, sun, sb)
-        gf.draw_screen(set, play_button, high_score, diego, cacti)
+        gf.draw_screen(set, play_button, high_score, dino, cacti)
 
         if not set.play:
             high_score.prep_score(set, True)
