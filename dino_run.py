@@ -20,7 +20,9 @@ def run_game():
     sun = Sun(set, screen)
     ct1 = City(set, screen, 1)
     ct2 = City(set, screen, 2)
+        # Active game scoreboard
     sb = Scoreboard(set, screen)
+        # High score shows when game paused
     high_score = Scoreboard(set, screen)
         # Playbutton - to start game
     play_button = Button(set, screen, "Play")
@@ -38,7 +40,7 @@ def run_game():
             # Updates city movement
             ct1.update()
             ct2.update()
-            sb.prep_score(set)
+            sb.prep_score(set)  # Preps scoreboard
 
         if set.play:
             # Checks for fireball collision or offscreen cacti

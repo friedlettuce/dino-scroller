@@ -19,8 +19,8 @@
 - Sun is hard set into background
 
 ###### Gameplay
-- If cactus and dino touch, back to start screen
-- For every 10 points the dino gains a fireball
+- If cactus and dino touch, game restarts to start screen
+- For every 10 cacti jumped the dino gains a fireball
 
 ###### Credit To
 - Dino Sprites: ScissorMarks
