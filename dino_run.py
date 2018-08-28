@@ -6,8 +6,7 @@ from time import sleep
 from settings import Settings
 import game_functions as gf
 
-from background import Sun, City, Tower, Scoreboard
-from button import Button
+from background import *
 from dino import Dino
 
 def run_game():
@@ -46,7 +45,7 @@ def run_game():
             gf.update_cacti(set, cacti, diego.fireball)
             diego.update(set)    # Updates dino, fireball, explosion
 
-            if random.randint(0, 10) > 8:
+            if random.randint(0, 10) > 8:   # Need better spawning method
                 gf.make_cactus(set, screen, cacti)
         else:
             high_score.prep_score(set, True)
