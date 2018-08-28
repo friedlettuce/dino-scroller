@@ -14,7 +14,10 @@ def check_events(settings, play_button, diego, cacti):
                 cacti.empty()
 
             elif event.key == pygame.K_SPACE:
-                diego.jump()
+                if not settings.play:
+                    settings.play = True
+                else:
+                    diego.jump()
 
             # Shoots fireball if 1 is available
             elif event.key == pygame.K_f and settings.gain_fb:
