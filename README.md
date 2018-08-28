@@ -3,11 +3,12 @@
 - Learning from Python Crash Course book
 
 #### To Do
-- Reorganize and refactor project
-- Make background of objects transparent
-- Improve cactus spawning
-- Cover up explosions better
-- Time objects better for more fps
+1. Reorganize and refactor project
+2. Cover up explosions better
+3. Improve cactus spawning
+4. Make background of objects transparent
+5. Time objects better for more fps
+6. Add high score text by high score
 
 #### Description
 ###### Objects
