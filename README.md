@@ -4,11 +4,13 @@
 
 #### To Do
 1. Reorganize and refactor project
-2. Cover up explosions better
-3. Improve cactus spawning
-4. Make background of objects transparent
-5. Time objects better for more fps
-6. Add high score text by high score
+2. Create individual fireballs, coverup and spawn seperately
+3. Cover up explosions better
+4. Improve cactus spawning
+5. Make background of objects transparent
+6. Time objects better for more fps
+7. Add high score text by high score
+8. Add pause after death
 
 #### Description
 ###### Objects
