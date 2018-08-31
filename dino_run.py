@@ -46,21 +46,18 @@ def run_game():
             # Checks for fireball collision or offscreen cacti
             gf.update_cacti(set, cacti, dino.fireball)
             dino.update(set)    # Updates dino, fireball, explosion
+            gf.check_score(set, dino, cacti)
 
             if random.randint(0, 10) > 8:   # Need better spawning method
                 gf.make_cactus(set, screen, cacti)
         else:
             high_score.prep_score(set, True)
-
-        # Updates dino/fireball/explosion
-        gf.check_score(set, dino, cacti)
+            high_score.prep_score(set, True)
+            high_score.show_score()
 
         gf.draw_background(set, ct1, ct2, sun, sb)
         gf.draw_screen(set, play_button, high_score, dino, cacti)
 
-        if not set.play:
-            high_score.prep_score(set, True)
-            high_score.show_score()
         sleep(.03)  # Gets around 34 frames a second
 
 run_game()
