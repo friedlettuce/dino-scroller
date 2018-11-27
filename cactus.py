@@ -7,7 +7,7 @@ class Cactus(Sprite):
     def __init__(self, set, screen):
         super().__init__()
         self.screen = screen
-        self.image = pygame.image.load('images\cactus.png').convert()
+        self.image = pygame.image.load('images/cactus.png').convert()
 
         self.speed = set.cactus_speed
         self.scored = False     # Makes sure cactus isn't scored more than once

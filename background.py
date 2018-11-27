@@ -7,7 +7,7 @@ class Sun:
 
     def __init__(self, set, screen):
         self.screen = screen
-        self.image = pygame.image.load('images\\sun.jpg').convert()
+        self.image = pygame.image.load('images/sun.jpg').convert()
 
         self.rect = self.image.get_rect()
         screen_rect = self.screen.get_rect()
@@ -26,7 +26,7 @@ class City(Sprite):
         super().__init__()
         self.screen = screen
         self.screen_width = set.screen_width
-        self.image = pygame.image.load('images\city.jpg').convert()
+        self.image = pygame.image.load('images/city.jpg').convert()
 
         self.num = num
         self.speed = int(set.cactus_speed / 4)
