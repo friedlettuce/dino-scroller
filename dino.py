@@ -63,8 +63,8 @@ class Dino:
                 self.timer = 0
                 self.frame = self.frame + 1
             elif self.timer % 3 == 0:
-                self.frame = self.frame + 1
-            self.timer = self.timer + 1
+                self.frame += 1
+            self.timer += 1
 
         # Block updates jump
         if self.isjump:
